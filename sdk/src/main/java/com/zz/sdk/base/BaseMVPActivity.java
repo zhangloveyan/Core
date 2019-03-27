@@ -30,18 +30,22 @@ public abstract class BaseMVPActivity<P extends BasePresenter> extends AppCompat
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
 
+
         initData();
     }
 
     private void initData() {
-        mPresenter = getPresenter();
+        setContentView(getLayoutId());
+        ButterKnife.bind(this);
+        mPresenter = (P) getPresenter();
         if (mPresenter != null) {
             mPresenter.attachMV(this);
         }
-        ButterKnife.bind(this);
         init();
         AppManager.getAppManager().addActivity(this);
     }
+
+    protected abstract int getLayoutId();
 
 
     @Override
