@@ -20,9 +20,9 @@ public class RetrofitHelper {
 
     private static volatile Retrofit retrofit;
     private static volatile OkHttpClient client;
-    private static int TIMEOUT_READ_OR_WRITE = 20;
-    private static int TIMEOUT_CONNECTION = 20;
-    private static String baseUrl;
+    private int TIMEOUT_READ_OR_WRITE = 20;
+    private int TIMEOUT_CONNECTION = 20;
+    private String baseUrl;
     private static volatile RetrofitHelper helper;
 
     private RetrofitHelper() {
@@ -33,7 +33,7 @@ public class RetrofitHelper {
      *
      * @return
      */
-    private static OkHttpClient getClient() {
+    private OkHttpClient getClient() {
         if (client == null) {
             synchronized (RetrofitHelper.class) {
                 if (client == null) {
@@ -57,7 +57,7 @@ public class RetrofitHelper {
      * @return
      */
 
-    private static Retrofit getRetrofitInstance() {
+    private Retrofit getRetrofitInstance() {
         if (retrofit == null) {
             synchronized (RetrofitHelper.class) {
                 if (retrofit == null) {
@@ -81,7 +81,10 @@ public class RetrofitHelper {
      * @return
      */
     public static <T> T getApi(Class<T> tClass) {
-        return getRetrofitInstance().create(tClass);
+        if (retrofit == null) {
+            throw new NullPointerException("retrofit is null,please init on application");
+        }
+        return retrofit.create(tClass);
     }
 
     /**
@@ -107,7 +110,7 @@ public class RetrofitHelper {
      * @return
      */
     public RetrofitHelper baseUrl(String baseUrl) {
-        RetrofitHelper.baseUrl = baseUrl;
+        this.baseUrl = baseUrl;
         return helper;
     }
 
