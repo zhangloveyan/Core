@@ -1,6 +1,7 @@
 package com.zz.base.mvp.contract;
 
 import com.zz.base.mvp.bean.ArticleListBean;
+import com.zz.base.mvp.bean.HotMovieBean;
 import com.zz.sdk.base.BasePresenter;
 import com.zz.sdk.base.IBaseModel;
 import com.zz.sdk.base.IBaseView;
@@ -18,6 +19,8 @@ public interface MainContract {
 
     interface IMainModel extends IBaseModel {
         Observable<ArticleListBean> getArticleList();
+
+        Observable<HotMovieBean> getHotMovie();
     }
 
     interface IMainView extends IBaseView {

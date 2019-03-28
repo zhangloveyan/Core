@@ -18,49 +18,127 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitHelper {
 
-    private static Retrofit retrofit;
-    private static OkHttpClient client;
-    private static final int TIMEOUT_READ = 20;
-    private static final int TIMEOUT_CONNECTION = 20;
+    private static volatile Retrofit retrofit;
+    private static volatile OkHttpClient client;
+    private static int TIMEOUT_READ_OR_WRITE = 20;
+    private static int TIMEOUT_CONNECTION = 20;
+    private static String baseUrl;
+    private static volatile RetrofitHelper helper;
 
+    private RetrofitHelper() {
+    }
 
+    /**
+     * 单例生成 client
+     *
+     * @return
+     */
     private static OkHttpClient getClient() {
         if (client == null) {
-            client = new OkHttpClient.Builder()
-                    // 超时时间
-                    .connectTimeout(TIMEOUT_CONNECTION, TimeUnit.SECONDS)
-                    .readTimeout(TIMEOUT_READ, TimeUnit.SECONDS)
-                    .writeTimeout(TIMEOUT_READ, TimeUnit.SECONDS)
-                    // 失败重连
-                    .retryOnConnectionFailure(true)
-                    .build();
+            synchronized (RetrofitHelper.class) {
+                if (client == null) {
+                    client = new OkHttpClient.Builder()
+                            // 超时时间
+                            .connectTimeout(TIMEOUT_CONNECTION, TimeUnit.SECONDS)
+                            .readTimeout(TIMEOUT_READ_OR_WRITE, TimeUnit.SECONDS)
+                            .writeTimeout(TIMEOUT_READ_OR_WRITE, TimeUnit.SECONDS)
+                            // 失败重连
+                            .retryOnConnectionFailure(true)
+                            .build();
+                }
+            }
         }
         return client;
     }
 
-    private static Retrofit getRetrofit(String url) {
+    /**
+     * 单例生成 retrofit
+     *
+     * @return
+     */
+
+    private static Retrofit getRetrofitInstance() {
         if (retrofit == null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(url)
-                    .client(getClient())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+            synchronized (RetrofitHelper.class) {
+                if (retrofit == null) {
+                    retrofit = new Retrofit.Builder()
+                            .baseUrl(baseUrl)
+                            .client(getClient())
+                            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+                }
+            }
         }
         return retrofit;
     }
 
     /**
      * 生成请求的 API
+     *
      * @param tClass
-     * @param url
      * @param <T>
      * @return
      */
-    public static <T> T getApi(Class<T> tClass, String url) {
-        return getRetrofit(url).create(tClass);
+    public static <T> T getApi(Class<T> tClass) {
+        return getRetrofitInstance().create(tClass);
     }
 
+    /**
+     * 单例生成 helper
+     *
+     * @return
+     */
+    public static RetrofitHelper getInstance() {
+        if (helper == null) {
+            synchronized (RetrofitHelper.class) {
+                if (helper == null) {
+                    helper = new RetrofitHelper();
+                }
+            }
+        }
+        return helper;
+    }
+
+    /**
+     * 设置 baseUrl
+     *
+     * @param baseUrl
+     * @return
+     */
+    public RetrofitHelper baseUrl(String baseUrl) {
+        RetrofitHelper.baseUrl = baseUrl;
+        return helper;
+    }
+
+    /**
+     * 设置读取超时时间
+     *
+     * @param readOrWriteTimeOut
+     * @return
+     */
+    public RetrofitHelper readOrWriteTimeOut(int readOrWriteTimeOut) {
+        TIMEOUT_READ_OR_WRITE = readOrWriteTimeOut;
+        return helper;
+    }
+
+    /**
+     * 设置连接超时时间
+     *
+     * @param connectionTimeOut
+     * @return
+     */
+    public RetrofitHelper connectionTimeOut(int connectionTimeOut) {
+        TIMEOUT_CONNECTION = connectionTimeOut;
+        return helper;
+    }
+
+    /**
+     * 初始化 retrofit
+     */
+    public void init() {
+        getRetrofitInstance();
+    }
 
     /**
      * 参数转为RequestBody
