@@ -1,6 +1,7 @@
 package com.zz.base.mvp.presenter;
 
 import com.zz.base.mvp.bean.ArticleListBean;
+import com.zz.base.mvp.bean.HotMovieBean;
 import com.zz.base.mvp.contract.MainContract;
 import com.zz.base.mvp.model.MainModel;
 
@@ -22,6 +23,18 @@ public class MainPresenter extends MainContract.IMainPresenter {
             @Override
             public void accept(ArticleListBean bean) throws Exception {
                 mIView.showData(bean);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+
+            }
+        }));
+
+        mRxManager.register(mIModel.getHotMovie().subscribe(new Consumer<HotMovieBean>() {
+            @Override
+            public void accept(HotMovieBean bean) throws Exception {
+                mIView.showMovieData(bean);
             }
         }, new Consumer<Throwable>() {
             @Override

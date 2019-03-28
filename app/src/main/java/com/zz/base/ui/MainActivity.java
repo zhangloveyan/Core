@@ -6,9 +6,13 @@ import android.widget.TextView;
 
 import com.zz.base.R;
 import com.zz.base.mvp.bean.ArticleListBean;
+import com.zz.base.mvp.bean.HotMovieBean;
 import com.zz.base.mvp.contract.MainContract;
 import com.zz.base.mvp.presenter.MainPresenter;
 import com.zz.sdk.base.BaseMVPActivity;
+import com.zz.sdk.utils.CheckUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,6 +21,8 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 
     @BindView(R.id.tv_main)
     TextView mTvMain;
+    @BindView(R.id.tv_movie)
+    TextView mTvMovie;
 
     @Override
     protected int getLayoutId() {
@@ -40,5 +46,10 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
     public void showData(ArticleListBean bean) {
         mTvMain.setText(bean.toString());
 
+    }
+
+    @Override
+    public void showMovieData(HotMovieBean bean) {
+        mTvMovie.setText(bean.toString());
     }
 }

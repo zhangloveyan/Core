@@ -24,6 +24,11 @@ public class RetrofitHelper {
     private int TIMEOUT_CONNECTION = 20;
     private String baseUrl;
     private static volatile RetrofitHelper helper;
+    final static String URL = "urlHost";
+    /**
+     * 多 baseHost 的请求 key
+     */
+    public final static String URL_HOST = URL + ":";
 
     private RetrofitHelper() {
     }
@@ -42,6 +47,7 @@ public class RetrofitHelper {
                             .connectTimeout(TIMEOUT_CONNECTION, TimeUnit.SECONDS)
                             .readTimeout(TIMEOUT_READ_OR_WRITE, TimeUnit.SECONDS)
                             .writeTimeout(TIMEOUT_READ_OR_WRITE, TimeUnit.SECONDS)
+                            .addInterceptor(new UrlHostInterceptor())
                             // 失败重连
                             .retryOnConnectionFailure(true)
                             .build();

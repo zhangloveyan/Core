@@ -25,5 +25,6 @@ public interface MainContract {
 
     interface IMainView extends IBaseView {
         void showData(ArticleListBean bean);
+        void showMovieData(HotMovieBean bean);
     }
 }
