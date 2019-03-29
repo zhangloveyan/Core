@@ -1,10 +1,13 @@
 package com.zz.sdk.net;
 
+import android.app.Application;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -30,8 +33,20 @@ public class RetrofitHelper {
      */
     public final static String URL_HOST = URL + ":";
 
+    /**
+     * 日志拦截器
+     */
+    private static final HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor()
+            .setLevel(HttpLoggingInterceptor.Level.BODY);
+
     private RetrofitHelper() {
     }
+
+    /**
+     * 是否是debug模式，默认false
+     */
+    private boolean isDebug;
+    private Application application;
 
     /**
      * 单例生成 client
@@ -42,15 +57,18 @@ public class RetrofitHelper {
         if (client == null) {
             synchronized (RetrofitHelper.class) {
                 if (client == null) {
-                    client = new OkHttpClient.Builder()
+                    OkHttpClient.Builder builder = new OkHttpClient.Builder()
                             // 超时时间
                             .connectTimeout(TIMEOUT_CONNECTION, TimeUnit.SECONDS)
                             .readTimeout(TIMEOUT_READ_OR_WRITE, TimeUnit.SECONDS)
                             .writeTimeout(TIMEOUT_READ_OR_WRITE, TimeUnit.SECONDS)
                             .addInterceptor(new UrlHostInterceptor())
                             // 失败重连
-                            .retryOnConnectionFailure(true)
-                            .build();
+                            .retryOnConnectionFailure(true);
+                    if (isDebug) {
+                        builder.addInterceptor(logInterceptor);
+                    }
+                    client = builder.build();
                 }
             }
         }
@@ -143,10 +161,22 @@ public class RetrofitHelper {
     }
 
     /**
+     * 设置是否是debug 默认false
+     *
+     * @param debug
+     * @return
+     */
+    public RetrofitHelper debug(boolean debug) {
+        isDebug = debug;
+        return this;
+    }
+
+    /**
      * 初始化 retrofit
      */
-    public void init() {
+    public void init(Application application) {
         getRetrofitInstance();
+        this.application = application;
     }
 
     /**

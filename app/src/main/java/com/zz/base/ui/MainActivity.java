@@ -10,12 +10,8 @@ import com.zz.base.mvp.bean.HotMovieBean;
 import com.zz.base.mvp.contract.MainContract;
 import com.zz.base.mvp.presenter.MainPresenter;
 import com.zz.sdk.base.BaseMVPActivity;
-import com.zz.sdk.utils.CheckUtils;
-
-import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class MainActivity extends BaseMVPActivity<MainPresenter> implements MainContract.IMainView {
 

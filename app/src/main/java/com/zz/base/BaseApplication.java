@@ -16,6 +16,7 @@ public class BaseApplication extends Application {
         RetrofitHelper.getInstance()
                 .baseUrl(API.HOST)
                 .readOrWriteTimeOut(100)
-                .init();
+                .debug(BuildConfig.DEBUG)
+                .init(this);
     }
 }

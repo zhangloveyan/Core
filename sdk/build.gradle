@@ -43,5 +43,6 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.5.0'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.5.0' // 必要依赖，和Rxjava结合必须用到，下面会提到
     compile 'com.squareup.retrofit2:converter-gson:2.5.0' // 必要依赖，解析json字符所用
+    compile 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 
 }
