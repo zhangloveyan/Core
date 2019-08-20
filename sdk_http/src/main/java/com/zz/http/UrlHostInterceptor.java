@@ -1,4 +1,4 @@
-package com.zz.http.interceptor;
+package com.zz.http;
 
 import com.zz.http.CheckUtils;
 import com.zz.http.RetrofitHelper;

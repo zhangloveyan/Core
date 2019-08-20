@@ -2,8 +2,6 @@ package com.zz.http;
 
 import android.app.Application;
 
-import com.zz.http.interceptor.UrlHostInterceptor;
-
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
@@ -29,7 +27,7 @@ public class RetrofitHelper {
     private int TIMEOUT_CONNECTION = 20;
     private String baseUrl;
     private static volatile RetrofitHelper helper;
-    public final static String URL = "urlHost";
+    final static String URL = "urlHost";
     /**
      * 多 baseHost 的请求 key
      */
@@ -108,7 +106,7 @@ public class RetrofitHelper {
      */
     public static <T> T getApi(Class<T> tClass) {
         if (retrofit == null) {
-            throw new NullPointerException("retrofit is null,please init on application");
+            throw new NullPointerException("retrofit is null, please init on application");
         }
         return retrofit.create(tClass);
     }
