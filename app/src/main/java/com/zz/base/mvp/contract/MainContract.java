@@ -2,12 +2,11 @@ package com.zz.base.mvp.contract;
 
 import com.zz.base.mvp.bean.ArticleListBean;
 import com.zz.base.mvp.bean.HotMovieBean;
-import com.zz.sdk.base.BasePresenter;
-import com.zz.sdk.base.IBaseModel;
-import com.zz.sdk.base.IBaseView;
+import com.zz.mvp.base.BasePresenter;
+import com.zz.mvp.base.IBaseModel;
+import com.zz.mvp.base.IBaseView;
 
 import io.reactivex.Observable;
-import okhttp3.ResponseBody;
 
 /**
  * Created by Zz on 2019/3/27.

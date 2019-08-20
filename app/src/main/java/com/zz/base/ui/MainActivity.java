@@ -1,7 +1,6 @@
 package com.zz.base.ui;
 
 
-import android.os.Bundle;
 import android.widget.TextView;
 
 import com.zz.base.R;
@@ -9,7 +8,7 @@ import com.zz.base.mvp.bean.ArticleListBean;
 import com.zz.base.mvp.bean.HotMovieBean;
 import com.zz.base.mvp.contract.MainContract;
 import com.zz.base.mvp.presenter.MainPresenter;
-import com.zz.sdk.base.BaseMVPActivity;
+import com.zz.mvp.base.BaseMVPActivity;
 
 import butterknife.BindView;
 

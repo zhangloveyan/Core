@@ -3,7 +3,7 @@ package com.zz.base;
 import android.app.Application;
 
 import com.zz.base.api.API;
-import com.zz.sdk.net.RetrofitHelper;
+import com.zz.http.RetrofitHelper;
 
 /**
  * Created by Zz on 2019/3/27.

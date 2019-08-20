@@ -1,12 +1,11 @@
 package com.zz.base.mvp.model;
 
-import com.zz.base.BaseApplication;
 import com.zz.base.api.API;
 import com.zz.base.mvp.bean.ArticleListBean;
 import com.zz.base.mvp.bean.HotMovieBean;
 import com.zz.base.mvp.contract.MainContract;
-import com.zz.sdk.net.RetrofitHelper;
-import com.zz.sdk.rx.RxHelper;
+import com.zz.http.RetrofitHelper;
+import com.zz.mvp.rx.RxHelper;
 
 import io.reactivex.Observable;
 

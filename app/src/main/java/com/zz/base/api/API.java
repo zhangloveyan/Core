@@ -2,7 +2,7 @@ package com.zz.base.api;
 
 import com.zz.base.mvp.bean.ArticleListBean;
 import com.zz.base.mvp.bean.HotMovieBean;
-import com.zz.sdk.net.RetrofitHelper;
+import com.zz.http.RetrofitHelper;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
