@@ -26,6 +26,8 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 
     @Override
     protected void init() {
+        mPresenter.getArticleList();
+        mPresenter.getHotMovie();
     }
 
     @Override
@@ -40,7 +42,6 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
     @Override
     public void showData(ArticleListBean bean) {
         mTvMain.setText(bean.toString());
-
     }
 
     @Override

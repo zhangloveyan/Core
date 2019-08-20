@@ -13,9 +13,6 @@ import io.reactivex.Observable;
  */
 
 public interface MainContract {
-    abstract class IMainPresenter extends BasePresenter<IMainModel, IMainView> {
-    }
-
     interface IMainModel extends IBaseModel {
         Observable<ArticleListBean> getArticleList();
 
@@ -25,5 +22,10 @@ public interface MainContract {
     interface IMainView extends IBaseView {
         void showData(ArticleListBean bean);
         void showMovieData(HotMovieBean bean);
+    }
+
+    abstract class IMainPresenter extends BasePresenter<IMainModel, IMainView> {
+        public abstract void getArticleList();
+        public abstract void getHotMovie();
     }
 }

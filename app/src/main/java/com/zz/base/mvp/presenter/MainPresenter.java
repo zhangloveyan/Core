@@ -19,6 +19,11 @@ public class MainPresenter extends MainContract.IMainPresenter {
 
     @Override
     public void onStart() {
+        // 立即执行
+    }
+
+    @Override
+    public void getArticleList() {
         mRxManager.register(mIModel.getArticleList().subscribe(new Consumer<ArticleListBean>() {
             @Override
             public void accept(ArticleListBean bean) throws Exception {
@@ -30,7 +35,10 @@ public class MainPresenter extends MainContract.IMainPresenter {
 
             }
         }));
+    }
 
+    @Override
+    public void getHotMovie() {
         mRxManager.register(mIModel.getHotMovie().subscribe(new Consumer<HotMovieBean>() {
             @Override
             public void accept(HotMovieBean bean) throws Exception {
