@@ -2,6 +2,8 @@ package com.zz.http;
 
 import android.app.Application;
 
+import com.google.gson.GsonBuilder;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
@@ -63,6 +65,9 @@ public class RetrofitHelper {
                             .readTimeout(TIMEOUT_READ_OR_WRITE, TimeUnit.SECONDS)
                             .writeTimeout(TIMEOUT_READ_OR_WRITE, TimeUnit.SECONDS)
                             .addInterceptor(new UrlHostInterceptor())
+                            // ssl 证书
+                            .sslSocketFactory(UnSafeTrustManager.getUnsafeOkHttpClient())
+                            .hostnameVerifier(org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER)
                             // 失败重连
                             .retryOnConnectionFailure(true);
                     if (isDebug) {
@@ -89,7 +94,7 @@ public class RetrofitHelper {
                             .baseUrl(baseUrl)
                             .client(getClient())
                             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                            .addConverterFactory(GsonConverterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().serializeNulls().create()))
                             .build();
                 }
             }
@@ -186,7 +191,7 @@ public class RetrofitHelper {
      * @return
      */
     public static RequestBody toRequestBody(String value) {
-        RequestBody body = RequestBody.create(MediaType.parse("text/plain"), value);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), value);
         return body;
     }
 }
