@@ -8,11 +8,11 @@ import com.zz.base.mvp.bean.ArticleListBean;
 import com.zz.base.mvp.bean.HotMovieBean;
 import com.zz.base.mvp.contract.MainContract;
 import com.zz.base.mvp.presenter.MainPresenter;
-import com.zz.mvp.base.BaseMVPActivity;
+import com.zz.mvp.base.BaseMvpActivity;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseMVPActivity<MainPresenter> implements MainContract.IMainView {
+public class MainActivity extends BaseMvpActivity<MainPresenter> implements MainContract.IMainView {
 
     @BindView(R.id.tv_main)
     TextView mTvMain;

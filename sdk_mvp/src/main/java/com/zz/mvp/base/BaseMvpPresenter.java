@@ -11,7 +11,7 @@ import io.reactivex.annotations.NonNull;
  * o(＞﹏＜)o
  */
 
-public abstract class BasePresenter<M, V> {
+public abstract class BaseMvpPresenter<M, V> {
     protected M mIModel;
     protected V mIView;
     protected RxManager mRxManager = new RxManager();

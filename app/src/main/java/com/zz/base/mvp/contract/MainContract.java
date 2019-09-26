@@ -2,7 +2,7 @@ package com.zz.base.mvp.contract;
 
 import com.zz.base.mvp.bean.ArticleListBean;
 import com.zz.base.mvp.bean.HotMovieBean;
-import com.zz.mvp.base.BasePresenter;
+import com.zz.mvp.base.BaseMvpPresenter;
 import com.zz.mvp.base.IBaseModel;
 import com.zz.mvp.base.IBaseView;
 
@@ -24,7 +24,7 @@ public interface MainContract {
         void showMovieData(HotMovieBean bean);
     }
 
-    abstract class IMainPresenter extends BasePresenter<IMainModel, IMainView> {
+    abstract class IMainPresenter extends BaseMvpPresenter<IMainModel, IMainView> {
         public abstract void getArticleList();
         public abstract void getHotMovie();
     }
